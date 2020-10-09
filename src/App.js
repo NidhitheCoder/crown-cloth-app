@@ -18,20 +18,8 @@ import {
 } from "./firebase/firebase.utlis";
 import { setCurrentUser } from "./redux/user/user.action";
 import { selectCurrentUser } from "./redux/user/user.selector";
-// import { selectCollectionsForPreview } from "./redux/shop/shop.selectors";
-
-// const HatPage = () =>(
-//   <div>
-//   <h1>HATS PAGE</h1></div>
-// )
 
 class App extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     currentUser: null
-  //   };
-  // }
 
   unSubscribeFromAuth = null;
 
@@ -41,10 +29,6 @@ class App extends React.Component {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
         userRef.onSnapshot(snapShot => {
-          // this.setState({
-          //   currentUser: { id: snapShot.id, ...snapShot.data() }
-          // });
-
           setCurrentUser({
             id: snapShot.id,
             ...snapShot.data()
@@ -52,12 +36,6 @@ class App extends React.Component {
         });
       }
       setCurrentUser(userAuth);
-      // addCollectionsAndDocuments(
-      //   "collections",
-      //   collectionsArray.map(({ title, items }) => ({ title, items }))
-      // );
-      // this.setState({ currentUser: userAuth });
-      // createUserProfileDocument(user);
     });
   }
 
@@ -88,7 +66,6 @@ class App extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
-  // collectionsArray: selectCollectionsForPreview
 });
 
 const mapDispatchToProps = dispatch => ({
