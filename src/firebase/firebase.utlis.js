@@ -74,7 +74,12 @@ export const convertCollectionSnapshotToMap = collections => {
     };
   });
 
-  console.log(transformedCollection);
+  return transformedCollection.reduce((accumulator, collection) => {
+    accumulator[collection.title.toLowerCase()] = collection;
+    return accumulator;
+  }, {});
+
+  // transformedCollection function uset for convert collection to an object with key as title of the collection.
 };
 
 export const auth = firebase.auth();
