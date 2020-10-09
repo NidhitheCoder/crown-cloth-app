@@ -7,7 +7,11 @@ import "firebase/auth";
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
   const userRef = firestore.doc(`users/${userAuth.uid}`);
+  // const collectionRef = firestore.collection('users');
+
   const snapShot = await userRef.get();
+  // const collectionSnapshot = await collectionRef.get();
+  // console.log({collection:collectionSnapshot.docs.map(doc=>doc.data())});
   if (!snapShot.exists) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
@@ -38,6 +42,22 @@ const config = {
 };
 
 firebase.initializeApp(config);
+
+export const addCollectionsAndDocuments = async (collectionKey,objectToAdd) => {
+  const collectionRef  = firestore.collection(collectionKey);
+
+  const batch = firestore.batch();
+  objectToAdd.forEach(obj => {
+    const newDocRef = collectionRef.doc(); 
+    // we can get the document as empty string with unique id
+
+    batch.set(newDocRef,obj);// set the object
+  });
+
+  return await batch.commit();
+  // batch.commit() fire of our batch request. batch.commit() return a promise.
+  // when commits exeeds it will comback and resolve a void value meaning a null value
+}
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
