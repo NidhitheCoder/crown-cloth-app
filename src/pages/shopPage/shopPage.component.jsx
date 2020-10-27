@@ -25,10 +25,20 @@ class ShopPage extends React.Component {
     const {updateCollections} = this.props;
     const collectionRef = firestore.collection("collections");
 
-    this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
+    // this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
+    //   const collectionMap = convertCollectionSnapshotToMap(snapshot);
+    //   updateCollections(collectionMap);
+    //   this.setState({loading:false})
+    // });
+
+    // fetch("https://firestore.googleapis.com/v1/projects/crown-db-9717d/databases/(default)/documents/collections")
+    // .then(res=>res.json())
+    // .then(data=>console.log(data));
+    
+    collectionRef.get().then(async snapshot => {
       const collectionMap = convertCollectionSnapshotToMap(snapshot);
       updateCollections(collectionMap);
-      this.setState({loading:false})
+      this.setState({loading:false});
     });
   }
 
