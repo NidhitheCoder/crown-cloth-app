@@ -1,10 +1,10 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components"; // , { css } 
 import { Link } from "react-router-dom";
 
-const optionsContainerStyles = css`
-  padding: 10px 15px;
-  cursor: pointer;
-`;
+// const optionsContainerStyles = css`
+//   padding: 10px 15px;
+//   cursor: pointer;
+// `;
 
 export const HeaderContainer = styled.div`
   height: 70px;
@@ -28,10 +28,12 @@ export const OptionsContainer = styled.div`
   align-items: center;
 `;
 
-export const OptionLink = styled(Link)`
-  ${optionsContainerStyles}
+ /* ${optionsContainerStyles} */
+export const OptionLink = styled(Link)` 
+  padding: 10px 15px;
+  cursor: pointer;
 `;
 
-export const OptionDiv = styled.div`
-  ${optionsContainerStyles}
-`;
+// export const OptionDiv = styled.div`
+//   ${optionsContainerStyles}
+// `;
