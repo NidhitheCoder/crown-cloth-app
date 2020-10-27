@@ -43,6 +43,45 @@ const config = {
 
 firebase.initializeApp(config);
 
+export const addCollectionsAndDocuments = async (
+  collectionKey,
+  objectToAdd
+) => {
+  const collectionRef = firestore.collection(collectionKey);
+
+  const batch = firestore.batch();
+  objectToAdd.forEach(obj => {
+    const newDocRef = collectionRef.doc();
+    // we can get the document as empty string with unique id
+
+    batch.set(newDocRef, obj); // set the object
+  });
+
+  return await batch.commit();
+  // batch.commit() fire of our batch request. batch.commit() return a promise.
+  // when commits exeeds it will comback and resolve a void value meaning a null value
+};
+
+export const convertCollectionSnapshotToMap = collections => {
+  const transformedCollection = collections.docs.map(doc => {
+    const { title, items } = doc.data();
+
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title,
+      items
+    };
+  });
+
+  return transformedCollection.reduce((accumulator, collection) => {
+    accumulator[collection.title.toLowerCase()] = collection;
+    return accumulator;
+  }, {});
+
+  // transformedCollection function uset for convert collection to an object with key as title of the collection.
+};
+
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 const provider = new firebase.auth.GoogleAuthProvider();

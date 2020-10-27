@@ -1,45 +1,34 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Switch, Route, Redirect } from "react-router-dom";
-import {createStructuredSelector} from 'reselect'
+import { createStructuredSelector } from "reselect";
 
 import "./App.css";
 
 import HomePage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shopPage/shopPage.component";
 import Header from "./components/header/header.component";
-import CheckoutPage from './pages/checkout/checkout.component';
+import CheckoutPage from "./pages/checkout/checkout.component";
 
 import SignInAndSignUp from "./pages/sign-in-and-sign-up/sign-in-and-sign-up";
-import { auth, createUserProfileDocument } from "./firebase/firebase.utlis";
+import {
+  auth,
+  createUserProfileDocument,
+  // addCollectionsAndDocuments
+} from "./firebase/firebase.utlis";
 import { setCurrentUser } from "./redux/user/user.action";
-import {selectCurrentUser} from './redux/user/user.selector';
-
-// const HatPage = () =>(
-//   <div>
-//   <h1>HATS PAGE</h1></div>
-// )
+import { selectCurrentUser } from "./redux/user/user.selector";
 
 class App extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     currentUser: null
-  //   };
-  // }
 
   unSubscribeFromAuth = null;
 
   componentDidMount() {
-    const { setCurrentUser } = this.props;
+    const { setCurrentUser } = this.props; //add <collectionsArray> for add collection to firebase.
     this.unSubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
         userRef.onSnapshot(snapShot => {
-          // this.setState({
-          //   currentUser: { id: snapShot.id, ...snapShot.data() }
-          // });
-
           setCurrentUser({
             id: snapShot.id,
             ...snapShot.data()
@@ -47,9 +36,7 @@ class App extends React.Component {
         });
       }
       setCurrentUser(userAuth);
-      // this.setState({ currentUser: userAuth });
-      // createUserProfileDocument(user);
-    });
+    },error => console.log(error));
   }
 
   componentWillUnmount() {
@@ -78,7 +65,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
 });
 
 const mapDispatchToProps = dispatch => ({
