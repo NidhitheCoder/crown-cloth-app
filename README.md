@@ -66,3 +66,24 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+# redux-saga
+
+- Redux saga is a library  that aim to make application side effects(i.e. asynchronous things like data fetching and impure things like accessing the browser catche) easier to manage, more efficent to execute, easy to test and better to handling failure.
+- In other words, It is a redux middleware library, That is designed to make handling side effects in your redux app nice and simple.
+
+- How to install ?
+
+    ```
+
+    npm install --save redux-saga
+
+    or 
+
+    yarn add redux-saga
+    
+    ```
+
+- takeEvery - It listen for every actions of a specific type that we pass to it.
+
+
