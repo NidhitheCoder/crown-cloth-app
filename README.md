@@ -85,6 +85,6 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
     ```
 
 - takeEvery - It listen for every actions of a specific type that we pass to it.
-- call - call creates a plain object describe the function call.
-
+- call - Call creates a plain object describe the function call.
+- take - Unless takeEvery we dont need to pass to anything in the second argument.
 
